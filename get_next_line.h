@@ -9,11 +9,12 @@
 #include <stdlib.h>
 
 
-size_t	ft_strlen(char const *s);
 char	*ft_strnew(size_t size);
-char	*ft_strndup(const char *s, size_t n);
+char	*ft_strdup(const char *s);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
-int		strfind_nl(char const *s);
+int		strfind_nl(char const *s, int zero);
 int		get_next_line(int fd, char **line);
 
 #endif
+
