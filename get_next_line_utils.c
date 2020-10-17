@@ -49,7 +49,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		i++;
 	while (s2[j])
 		j++;
-	if (!(new = malloc((i + j + 2) * sizeof(char))))
+	if (!(new = malloc((i + j + 1) * sizeof(char))))
 		return (NULL);
 	i = 0;
 	while (*s1)

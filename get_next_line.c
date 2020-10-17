@@ -1,8 +1,4 @@
 #include "get_next_line.h"
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <stdio.h>
 
 
 void	free_strs(char **str)
@@ -66,23 +62,5 @@ int		get_next_line(int fd, char **line)
 		extract_line(fd, line, content, ret);
 		return (1);
 	}
-	return (0);
-}
-
-int	main(int ac, char **av)
-{
-	int		fd;
-	char	*line;
-	
-	if (ac == 1)
-		fd = 0;
-	else
-		fd = open(av[1], O_RDONLY);
-	if (fd < 0)
-		return 1;
-	while (get_next_line(fd, &line) > 0)
-		write(1, line, ft_strlen(line));
-	write(1, "end\n", 4);
-	free(line);
 	return (0);
 }
