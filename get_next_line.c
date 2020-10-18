@@ -49,11 +49,11 @@ int		get_next_line(int fd, char **line)
 
 	if (fd < 0 || !line)
 		return (-1);
+	if (!content[fd])
+		content[fd] = ft_strnew(1);
 	while ((ret = read(fd, buf, BUFFER_SIZE)) > 0)
 	{
 		buf[ret] = 0;
-		if (!content[fd])
-			content[fd] = ft_strnew(1);
 		str = ft_strjoin(content[fd], buf);
 		free(content[fd]);
 		content[fd] = str;
