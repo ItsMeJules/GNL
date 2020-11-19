@@ -6,7 +6,7 @@
 /*   By: jpeyron <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 17:23:26 by jpeyron           #+#    #+#             */
-/*   Updated: 2020/11/18 17:24:53 by jpeyron          ###   ########.fr       */
+/*   Updated: 2020/11/19 21:17:14 by jpeyron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,10 @@ int		get_next_line(int fd, char **line)
 		if (strfind_nl(content[fd], 0) != -1)
 			break ;
 	}
+	extract_line(fd, line, content, ret);
 	if (ret < 0)
 		return (-1);
 	else if (ret == 0 && (!content[fd] || !content[fd][0]))
 		return (0);
-	extract_line(fd, line, content, ret);
 	return (1);
 }
