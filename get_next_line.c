@@ -6,7 +6,7 @@
 /*   By: jpeyron <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 17:23:26 by jpeyron           #+#    #+#             */
-/*   Updated: 2020/11/20 02:41:49 by jpeyron          ###   ########.fr       */
+/*   Updated: 2020/11/20 21:27:59 by jpeyron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,11 @@ int		get_next_line(int fd, char **line)
 	char		buf[BUFFER_SIZE + 1];
 	int			ret;
 
-	if (fd < 0 || !line)
+	*line = NULL;
+	if (fd < 0 || !line || BUFFER_SIZE < 1)
 		return (-1);
 	if (!content[fd])
 		content[fd] = ft_strnew(1);
-	*line = NULL;
 	while ((ret = read(fd, buf, BUFFER_SIZE)) > 0)
 	{
 		buf[ret] = 0;
@@ -87,4 +87,3 @@ int		get_next_line(int fd, char **line)
 	}
 	return (handle_return(line, content, ret, fd));
 }
-
