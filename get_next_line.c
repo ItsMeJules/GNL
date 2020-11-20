@@ -6,7 +6,7 @@
 /*   By: jpeyron <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 17:23:26 by jpeyron           #+#    #+#             */
-/*   Updated: 2020/11/19 21:17:14 by jpeyron          ###   ########.fr       */
+/*   Updated: 2020/11/20 02:41:49 by jpeyron          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	free_strs(char **str)
 	}
 }
 
-void	extract_line(int fd, char **line, char **content, int ret)
+int		extract_line(int fd, char **line, char **content, int ret)
 {
 	int		pos;
 	char	*tmp;
@@ -43,13 +43,25 @@ void	extract_line(int fd, char **line, char **content, int ret)
 	else if (content[fd][pos] == 0)
 	{
 		if (ret == BUFFER_SIZE)
-		{
-			get_next_line(fd, line);
-			return ;
-		}
+			return (get_next_line(fd, line));
 		*line = ft_strdup(content[fd]);
 		free_strs(&content[fd]);
+		return (0);
 	}
+	return (1);
+}
+
+int		handle_return(char **line, char **content, int ret, int fd)
+{
+	if (ret < 0)
+		return (-1);
+	else if (ret == 0 && (!content[fd] || !content[fd][0]))
+	{
+		if (!*line)
+			*line = ft_strnew(1);
+		return (0);
+	}
+	return (extract_line(fd, line, content, ret));
 }
 
 int		get_next_line(int fd, char **line)
@@ -63,6 +75,7 @@ int		get_next_line(int fd, char **line)
 		return (-1);
 	if (!content[fd])
 		content[fd] = ft_strnew(1);
+	*line = NULL;
 	while ((ret = read(fd, buf, BUFFER_SIZE)) > 0)
 	{
 		buf[ret] = 0;
@@ -72,10 +85,6 @@ int		get_next_line(int fd, char **line)
 		if (strfind_nl(content[fd], 0) != -1)
 			break ;
 	}
-	extract_line(fd, line, content, ret);
-	if (ret < 0)
-		return (-1);
-	else if (ret == 0 && (!content[fd] || !content[fd][0]))
-		return (0);
-	return (1);
+	return (handle_return(line, content, ret, fd));
 }
+
